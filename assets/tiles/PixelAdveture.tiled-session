@@ -1,0 +1,83 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Level-02.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Level-01.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1.4546875,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 344.40386680988183,
+                "y": 183.88829215896885
+            }
+        },
+        "Level-02.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 347.6666666666667,
+                "y": 164
+            }
+        },
+        "Level0-1.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1.4546875,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 294.5649838882922,
+                "y": 169.79591836734699
+            }
+        },
+        "Level0-2.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1.767890625,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 290.45914534446945,
+                "y": 183.83490211675283
+            }
+        },
+        "Pixel Adventure.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "C:/Users/surya/StudioProjects/pixel_adventure/assets/images/Terrain",
+    "map.height": 23,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 40,
+    "openFiles": [
+        "Pixel Adventure.tsx",
+        "Level-01.tmx",
+        "Level-02.tmx"
+    ],
+    "project": "PixelAdveture.tiled-project",
+    "recentFiles": [
+        "Pixel Adventure.tsx",
+        "Level-01.tmx",
+        "Level-02.tmx",
+        "Level0-1.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
