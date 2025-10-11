@@ -1,11 +1,13 @@
 import 'dart:async';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 import 'package:pixel_adventure/components/collision_block.dart';
+import 'package:pixel_adventure/components/player_hitbox.dart';
 import 'package:pixel_adventure/components/utils.dart';
 import '../pixel_adventure.dart';
 
-enum PlayerState {idle, running}
+enum PlayerState {idle, running, jumping, falling}
 
 
 class Player extends  SpriteAnimationGroupComponent with HasGameRef<PixelAdventure>,KeyboardHandler
@@ -13,12 +15,14 @@ class Player extends  SpriteAnimationGroupComponent with HasGameRef<PixelAdventu
   String character;
   Player({position, this.character = 'Ninja Frog'})  :  super(position: position);
 
+  final double stepTime = 0.05;
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runningAnimation;
-  final double stepTime = 0.05;
+  late final SpriteAnimation jumpingAnimation;
+  late final SpriteAnimation fallingAnimation;
 
   final double _gravity = 9.8;
-  final double _jumpForce = 460;
+  final double _jumpForce = 260;//460;
   final double _terminalVelocity = 300;
   double horizontalMovement =0;
   double moveSpeed = 100;
@@ -26,12 +30,17 @@ class Player extends  SpriteAnimationGroupComponent with HasGameRef<PixelAdventu
   bool isOnGround = false;
   bool hasJumped = false;
   List<CollisionBlock> collisionBlocks = [];
+  PlayerHitbox hitbox =PlayerHitbox(offsetX: 10, offsetY: 4, width: 14, height: 28);
 
 
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
     debugMode = true;
+    add(RectangleHitbox(
+      position: Vector2(hitbox.offsetX, hitbox.offsetY),
+      size: Vector2(hitbox.width, hitbox.height)
+    ));
     return super.onLoad();
   }
 
@@ -63,13 +72,16 @@ class Player extends  SpriteAnimationGroupComponent with HasGameRef<PixelAdventu
   void _loadAllAnimations()
   {
     idleAnimation = _spriteAnimation('Idle',11);
-
     runningAnimation = _spriteAnimation('Run',12);
+    jumpingAnimation = _spriteAnimation('Jump',1);
+    fallingAnimation = _spriteAnimation('Fall',1);
 
     ///animation shit start here
     animations = {
       PlayerState.idle: idleAnimation,
       PlayerState.running: runningAnimation,
+      PlayerState.jumping: jumpingAnimation,
+      PlayerState.falling: fallingAnimation,
     };
 
     ///current animation
@@ -104,12 +116,20 @@ class Player extends  SpriteAnimationGroupComponent with HasGameRef<PixelAdventu
     //check if moving set running
     if(velocity.x > 0 || velocity.x < 0) playerState = PlayerState.running;
 
+    //check if falling
+    if(velocity.y > 0)playerState = PlayerState.falling;
+
+    //jumping
+    if(velocity.y < 0 ) playerState = PlayerState.jumping;
+
     current = playerState;
   }
 
   void _updatePlayerMovement(double dt)
   {
     if(hasJumped && isOnGround) _playerJump(dt);
+
+    //if(velocity.y > _gravity) isOnGround = false; //this is something realeted to jump
 
     velocity.x = horizontalMovement * moveSpeed;
     position.x += velocity.x * dt;
@@ -161,7 +181,17 @@ class Player extends  SpriteAnimationGroupComponent with HasGameRef<PixelAdventu
       {
         if(block.isPlatform)
           {
-
+            ///this is platform shit
+            if(checkCollision(this, block))
+              {
+                if(velocity.y > 0)
+                {
+                  velocity.y=0;
+                  position.y = block.y - width;
+                  isOnGround = true;
+                  break;
+                }
+              }
           }
         else
           {
