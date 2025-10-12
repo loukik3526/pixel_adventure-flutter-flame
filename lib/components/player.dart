@@ -36,7 +36,7 @@ class Player extends  SpriteAnimationGroupComponent with HasGameRef<PixelAdventu
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
-    debugMode = true;
+    //debugMode = true;
     add(RectangleHitbox(
       position: Vector2(hitbox.offsetX, hitbox.offsetY),
       size: Vector2(hitbox.width, hitbox.height)
@@ -154,13 +154,13 @@ class Player extends  SpriteAnimationGroupComponent with HasGameRef<PixelAdventu
                   if(velocity.x > 0)
                     {
                       velocity.x = 0 ;
-                      position.x = block.x - width;
+                      position.x = block.x - hitbox.offsetX - hitbox.width;
                       break;
                     }
                   if(velocity.x < 0)
                   {
                     velocity.x = 0 ;
-                    position.x = block.x + block.width + width;
+                    position.x = block.x + block.width + hitbox.width + hitbox.offsetX;
                     break;
                   }
                 }
@@ -187,7 +187,7 @@ class Player extends  SpriteAnimationGroupComponent with HasGameRef<PixelAdventu
                 if(velocity.y > 0)
                 {
                   velocity.y=0;
-                  position.y = block.y - width;
+                  position.y = block.y - hitbox.height - hitbox.offsetY;
                   isOnGround = true;
                   break;
                 }
@@ -200,14 +200,14 @@ class Player extends  SpriteAnimationGroupComponent with HasGameRef<PixelAdventu
                 if(velocity.y > 0)
                   {
                     velocity.y=0;
-                    position.y = block.y - width;
+                    position.y = block.y - hitbox.height - hitbox.offsetY;
                     isOnGround = true;
                     break;
                   }
                 if(velocity.y < 0)
                   {
                     velocity.y=0;
-                    position.y= block.y+ block.height;
+                    position.y= block.y + block.height - hitbox.offsetY;
                   }
               }
           }

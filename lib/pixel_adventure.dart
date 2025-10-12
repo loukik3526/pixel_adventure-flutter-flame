@@ -26,7 +26,7 @@ class PixelAdventure extends FlameGame with HasKeyboardHandlerComponents, DragCa
 
     final world = Level(
       player: player,
-      levelName: 'Level-02',
+      levelName: 'Level-01',
     );
 
 
