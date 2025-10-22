@@ -6,6 +6,8 @@ import 'package:pixel_adventure/components/collision_block.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/pixel_adventure.dart';
 
+import 'fruit.dart';
+
 class Level extends World with HasGameRef<PixelAdventure>
 {
   final String levelName;
@@ -66,7 +68,11 @@ class Level extends World with HasGameRef<PixelAdventure>
             add(player);
             break;
           case'Fruit':
-
+            final fruit = Fruit(fruit:spawnPoint.name,
+              position:Vector2(spawnPoint.x, spawnPoint.y),
+                size:Vector2(spawnPoint.x, spawnPoint.y)
+            );
+            add(fruit);
           default:
         }
       }
